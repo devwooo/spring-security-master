@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Home</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f7fa;
+            color: #1f2937;
+        }
+
+        /* Header */
+        header {
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .nav a {
+            color: #4b5563;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav a:hover {
+            color: #4f46e5;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .logout-btn:hover {
+            background: #f3f4f6;
+        }
+
+        /* Main */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .hero h1 {
+            margin: 0 0 20px;
+            font-size: 42px;
+            line-height: 1.3;
+        }
+
+        .hero h1 span {
+            color: #4f46e5;
+        }
+
+        .hero p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 17px;
+        }
+
+        /* Cards */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .card {
+            padding: 30px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        }
+
+        .card-icon {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            background: #eef2ff;
+            color: #4f46e5;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .card h2 {
+            margin: 0 0 10px;
+            font-size: 20px;
+        }
+
+        .card p {
+            margin: 0;
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 20px;
+            color: #4f46e5;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            padding: 30px;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 13px;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            header {
+                padding: 0 20px;
+            }
+
+            .nav a {
+                display: none;
+            }
+
+            main {
+                padding: 60px 20px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">
+        MyService
+    </div>
+
+    <nav class="nav">
+        <a href="/">홈</a>
+        <a href="/board">게시판</a>
+        <a href="/mypage">마이페이지</a>
+
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="logout-btn">
+                로그아웃
+            </button>
+        </form>
+    </nav>
+</header>
+
+<main>
+
+    <section class="hero">
+        <h1>
+            안녕하세요 👋<br>
+            <span>MyService</span>에 오신 것을 환영합니다.
+        </h1>
+
+        <p>
+            로그인에 성공했습니다. 원하는 서비스를 이용해보세요.
+        </p>
+    </section>
+
+
+    <section class="cards">
+
+        <div class="card">
+            <div class="card-icon">B</div>
+
+            <h2>게시판</h2>
+
+            <p>
+                다양한 게시글을 확인하고
+                새로운 글을 작성해보세요.
+            </p>
+
+            <a href="/board">
+                게시판 이동 →
+            </a>
+        </div>
+
+
+        <div class="card">
+            <div class="card-icon">M</div>
+
+            <h2>마이페이지</h2>
+
+            <p>
+                내 정보를 확인하고
+                회원 정보를 관리할 수 있습니다.
+            </p>
+
+            <a href="/mypage">
+                마이페이지 이동 →
+            </a>
+        </div>
+
+
+        <div class="card">
+            <div class="card-icon">S</div>
+
+            <h2>설정</h2>
+
+            <p>
+                서비스 이용에 필요한
+                다양한 설정을 관리할 수 있습니다.
+            </p>
+
+            <a href="/settings">
+                설정 이동 →
+            </a>
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    © 2026 MyService. All rights reserved.
+</footer>
+
+</body>
+</html>
