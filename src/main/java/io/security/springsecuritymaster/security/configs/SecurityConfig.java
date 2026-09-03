@@ -27,29 +27,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
-                .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
-                        .loginPage("/login")
-                        .loginProcessingUrl("/login") // action == loginProcessingUrl = 필터가 알아서 인증 / 컨트롤러 매핑 = 내가 직접 인증. controller 까지 일치하면 (이건 무시됨 필터우선)
-                        .defaultSuccessUrl("/")
-                        .failureUrl("/failed")
-                        .failureHandler(new AuthenticationFailureHandler() {
-                            @Override
-                            public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-                                System.out.println(exception.getMessage());
-                                response.sendRedirect(request.getContextPath() + "/login");
-                            }
-                        })
-                        .successHandler(new AuthenticationSuccessHandler() {
-                            @Override
-                            public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                                System.out.println(authentication.getName());
-                                response.sendRedirect(request.getContextPath() + "/");
-                            }
-                        })
-                        .permitAll()    //this.loginPage, this.loginProcessingUrl, this.failureUrl 꼭 허용해야함 아니면 리다이렉트 지옥
-        );
-
+        http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
         return http.build();
     }
 
