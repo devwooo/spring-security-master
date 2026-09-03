@@ -1,25 +1,15 @@
 package io.security.springsecuritymaster.security.configs;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-
-import java.io.IOException;
 
 @EnableWebSecurity
 @Configuration
@@ -27,7 +17,16 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
+        http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+                .formLogin(Customizer.withDefaults())
+                .rememberMe(rememberMe -> rememberMe
+                        .alwaysRemember(true)
+                        .tokenValiditySeconds(3600)
+                        .userDetailsService(userDetailsService())
+                        .rememberMeParameter("remember")
+                        .rememberMeCookieName("remember")
+                        .key("security"));
+
         return http.build();
     }
 
