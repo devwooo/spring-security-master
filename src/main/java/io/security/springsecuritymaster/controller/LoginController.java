@@ -22,4 +22,9 @@ public class LoginController {
 		System.out.println("Login Post");
 		return "index";
 	}
+
+	@GetMapping("/logoutSuccess")
+	public String logoutSuccess() {
+		return "logoutSuccess";
+	}
 }
