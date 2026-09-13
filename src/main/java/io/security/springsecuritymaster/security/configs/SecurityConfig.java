@@ -3,6 +3,7 @@ package io.security.springsecuritymaster.security.configs;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -21,13 +22,17 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 
 import java.io.IOException;
 
+@Slf4j
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
+        http
+                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
+                .formLogin(Customizer.withDefaults());
+
         return http.build();
     }
 
